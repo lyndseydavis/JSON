@@ -13,7 +13,7 @@ list_of_eqs = eq_data["features"]
 print(len(list_of_eqs))
 
 # create list of magnitudes, longitudes, latitudes
-mags, lons, lats = [], [], []
+mags, lons, lats, hover_text = [], [], [], []
 for eq in list_of_eqs:
     mag = eq["properties"]["mag"]
     mags.append(mag)
@@ -21,6 +21,7 @@ for eq in list_of_eqs:
     lons.append(lon)
     lat = eq["geometry"]["coordinates"][1]
     lats.append(lat)
+# print first 10
 print(mags[:10])
 print(lons[:10])
 print(lats[:10])
