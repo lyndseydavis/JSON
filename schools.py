@@ -71,12 +71,11 @@ for i in uni:
 
 # create list of schools and aa enrollment if greater than 10%
 for i in uni:
-    if (
-        i["Percent of total enrollment that are Black or African American (DRVEF2020)"]
-        > 10
-    ):
+    enroll = i[
+        "Percent of total enrollment that are Black or African American (DRVEF2020)"
+    ]
+    if enroll > 10:
         school_name = i["instnm"]
-        enroll = i["Graduation rate  women (DRVGR2020)"]
         lon2.append(i["Longitude location of institution (HD2020)"])
         lat2.append(i["Latitude location of institution (HD2020)"])
         hover2.append(f"{school_name}, {enroll}%")
