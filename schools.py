@@ -54,9 +54,9 @@ for i in univ_data:
     hover1,
     hover2,
     hover3,
-    enroll1,
-    enroll2,
-    enroll3,
+    size1,
+    size2,
+    size3,
 ) = ([], [], [], [], [], [], [], [], [], [], [], [])
 # create list of schools and grad rate of women if greater than 50%
 for i in uni:
@@ -67,7 +67,7 @@ for i in uni:
         lat1.append(i["Latitude location of institution (HD2020)"])
         hover1.append(f"{school_name}, {grad}%")
         size = 0.0002 * float(i["Total  enrollment (DRVEF2020)"])
-        enroll1.append(size)
+        size1.append(size)
 
 # create list of schools and aa enrollment if greater than 10%
 for i in uni:
@@ -81,7 +81,7 @@ for i in uni:
         lat2.append(i["Latitude location of institution (HD2020)"])
         hover2.append(f"{school_name}, {enroll}%")
         size = 0.0005 * float(i["Total  enrollment (DRVEF2020)"])
-        enroll2.append(size)
+        size2.append(size)
 
 # create list of schools and off-campus costs if greater than $50,000
 for i in uni:
@@ -100,7 +100,7 @@ for i in uni:
             lat3.append(i["Latitude location of institution (HD2020)"])
             hover3.append(f"{school_name}, ${price}")
             size = 0.0005 * float(i["Total  enrollment (DRVEF2020)"])
-            enroll3.append(size)
+            size3.append(size)
 
 """
 # print checks
@@ -123,10 +123,8 @@ data1 = [
         "lon": lon1,
         "lat": lat1,
         "text": hover1,
-        "marker": {
-            "size": enroll1,
-            "color": "blue",
-        },
+        "marker": {"size": size1, "color": "green"},
+        "locationmode": "USA-states",
     }
 ]
 
@@ -146,8 +144,8 @@ data2 = [
         "lat": lat2,
         "text": hover2,
         "marker": {
-            "size": enroll2,
-            "color": "blue",
+            "size": size2,
+            "color": "green",
         },
     }
 ]
@@ -168,8 +166,8 @@ data3 = [
         "lat": lat3,
         "text": hover3,
         "marker": {
-            "size": enroll3,
-            "color": "blue",
+            "size": size3,
+            "color": "green",
         },
     }
 ]
