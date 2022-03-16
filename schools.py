@@ -21,7 +21,7 @@ infile = open("univ.json", "r")
 univ_data = json.load(infile)
 
 # count number of schools
-print(len(univ_data))
+# print(len(univ_data))
 
 # create list of schools that match the correct conferences
 # unable to make a single if statement with "or" and all number - wants to append all 649
@@ -39,27 +39,51 @@ for i in univ_data:
         uni.append(i)
     elif con == 130:
         uni.append(i)
-# check length of uni list
-print(len(uni))
 
-name1, name2, name3, grad_women, aa_enroll, off_price = [], [], [], [], [], []
+# check length of uni list
+# print(len(uni))
+
+# create empty lists for all variables needed to make the 3 maps
+(
+    lat1,
+    lon1,
+    lat2,
+    lon2,
+    lat3,
+    lon3,
+    hover1,
+    hover2,
+    hover3,
+    enroll1,
+    enroll2,
+    enroll3,
+) = ([], [], [], [], [], [], [], [], [], [], [], [])
+# create list of schools and grad rate of women if greater than 50%
 for i in uni:
     if i["Graduation rate  women (DRVGR2020)"] > 50:
         school_name = i["instnm"]
-        name1.append(school_name)
         grad = i["Graduation rate  women (DRVGR2020)"]
-        grad_women.append(grad)
+        lon1.append(i["Longitude location of institution (HD2020)"])
+        lat1.append(i["Latitude location of institution (HD2020)"])
+        hover1.append(f"{school_name}, {grad}%")
+        size = 0.0002 * float(i["Total  enrollment (DRVEF2020)"])
+        enroll1.append(size)
 
+# create list of schools and aa enrollment if greater than 10%
 for i in uni:
     if (
         i["Percent of total enrollment that are Black or African American (DRVEF2020)"]
         > 10
     ):
         school_name = i["instnm"]
-        name2.append(school_name)
         enroll = i["Graduation rate  women (DRVGR2020)"]
-        aa_enroll.append(enroll)
+        lon2.append(i["Longitude location of institution (HD2020)"])
+        lat2.append(i["Latitude location of institution (HD2020)"])
+        hover2.append(f"{school_name}, {enroll}%")
+        size = 0.0005 * float(i["Total  enrollment (DRVEF2020)"])
+        enroll2.append(size)
 
+# create list of schools and off-campus costs if greater than $50,000
 for i in uni:
     try:
         price = int(
@@ -68,22 +92,92 @@ for i in uni:
             ]
         )
     except TypeError:
-        print("None")
+        print("")
     else:
         if price > 50000:
             school_name = i["instnm"]
-            name3.append(school_name)
-            price = i[
-                "Total price for in-state students living off campus (not with family)  2020-21 (DRVIC2020)"
-            ]
-            off_price.append(price)
+            lon3.append(i["Longitude location of institution (HD2020)"])
+            lat3.append(i["Latitude location of institution (HD2020)"])
+            hover3.append(f"{school_name}, ${price}")
+            size = 0.0005 * float(i["Total  enrollment (DRVEF2020)"])
+            enroll3.append(size)
 
 """
-#print checks
-print(len(name1))
-print(len(grad_women))
-print(len(name2))
-print(len(aa_enroll))
-print(len(name3))
-print(len(off_price))
+# print checks
+print(len(lon1))
+print(len(lat1))
+print(len(lon2))
+print(len(lat2))
+print(len(lon3))
+print(len(lat3))
 """
+
+from plotly.graph_objs import Scattergeo, Layout
+from plotly import offline
+
+
+# Map 1
+data1 = [
+    {
+        "type": "scattergeo",
+        "lon": lon1,
+        "lat": lat1,
+        "text": hover1,
+        "marker": {
+            "size": enroll1,
+            "color": "blue",
+        },
+    }
+]
+
+my_layout = Layout(
+    title="Power 5 Conference Institutions with over 50% Grad Rate for Women"
+)
+
+fig = {"data": data1, "layout": my_layout}
+
+offline.plot(fig, filename="women_grad.html")
+
+# Map 2
+data2 = [
+    {
+        "type": "scattergeo",
+        "lon": lon2,
+        "lat": lat2,
+        "text": hover2,
+        "marker": {
+            "size": enroll2,
+            "color": "blue",
+        },
+    }
+]
+
+my_layout = Layout(
+    title="Power 5 Conference Institutions with over 10% Black/African American Enrollment"
+)
+
+fig = {"data": data2, "layout": my_layout}
+
+offline.plot(fig, filename="aa_enroll.html")
+
+# Map 3
+data3 = [
+    {
+        "type": "scattergeo",
+        "lon": lon3,
+        "lat": lat3,
+        "text": hover3,
+        "marker": {
+            "size": enroll3,
+            "color": "blue",
+        },
+    }
+]
+
+my_layout = Layout(
+    title="Power 5 Conference Institutions with Off-Campus Costs > $50,000"
+)
+
+fig = {"data": data3, "layout": my_layout}
+
+offline.plot(fig, filename="off_cost.html")
