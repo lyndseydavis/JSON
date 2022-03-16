@@ -122,8 +122,13 @@ data1 = [
         "lon": lon1,
         "lat": lat1,
         "text": hover1,
-        "marker": {"size": size1, "color": "green"},
-        "locationmode": "USA-states",
+        "marker": {
+            "size": size1,
+            "color": size1,
+            "colorscale": "Viridis",
+            "reversescale": True,
+            "colorbar": {"title": "Total Enrollment"},
+        },
     }
 ]
 
@@ -144,7 +149,10 @@ data2 = [
         "text": hover2,
         "marker": {
             "size": size2,
-            "color": "green",
+            "color": size2,
+            "colorscale": "Viridis",
+            "reversescale": True,
+            "colorbar": {"title": "Total Enrollment"},
         },
     }
 ]
@@ -166,7 +174,10 @@ data3 = [
         "text": hover3,
         "marker": {
             "size": size3,
-            "color": "green",
+            "color": size3,
+            "colorscale": "Viridis",
+            "reversescale": True,
+            "colorbar": {"title": "Total Enrollment"},
         },
     }
 ]
