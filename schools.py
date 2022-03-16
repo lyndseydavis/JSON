@@ -29,15 +29,7 @@ uni = []
 for i in univ_data:
     con = i["NCAA"]["NAIA conference number football (IC2020)"]
     con = int(con)
-    if con == 102:
-        uni.append(i)
-    elif con == 107:
-        uni.append(i)
-    elif con == 108:
-        uni.append(i)
-    elif con == 127:
-        uni.append(i)
-    elif con == 130:
+    if con == 102 or con == 107 or con == 108 or con == 127 or con == 130:
         uni.append(i)
 
 # check length of uni list
@@ -122,13 +114,7 @@ data1 = [
         "lon": lon1,
         "lat": lat1,
         "text": hover1,
-        "marker": {
-            "size": size1,
-            "color": size1,
-            "colorscale": "Viridis",
-            "reversescale": True,
-            "colorbar": {"title": "Total Enrollment"},
-        },
+        "marker": {"size": size1, "color": "green"},
     }
 ]
 
@@ -149,10 +135,7 @@ data2 = [
         "text": hover2,
         "marker": {
             "size": size2,
-            "color": size2,
-            "colorscale": "Viridis",
-            "reversescale": True,
-            "colorbar": {"title": "Total Enrollment"},
+            "color": "green",
         },
     }
 ]
@@ -174,10 +157,7 @@ data3 = [
         "text": hover3,
         "marker": {
             "size": size3,
-            "color": size3,
-            "colorscale": "Viridis",
-            "reversescale": True,
-            "colorbar": {"title": "Total Enrollment"},
+            "color": "green",
         },
     }
 ]
